@@ -2,6 +2,8 @@
 App({
   onLaunch: function () {
     var that = this;
+    wx.setStorageSync('mallName', "TONGXIN");
+    /**
     //  获取商城名称
     wx.request({
       url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/config/get-value',
@@ -45,7 +47,7 @@ App({
           that.globalData.kanjiaList = res.data.data.result;
         }
       }
-    })
+    }) */
     this.login();
   },
   login : function () {
@@ -68,6 +70,7 @@ App({
     }
     wx.login({
       success: function (res) {
+        console.log(res);
         wx.request({
           url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/user/wxapp/login',
           data: {
