@@ -3,80 +3,22 @@ App({
   onLaunch: function () {
     var that = this;
     wx.setStorageSync('mallName', "TONGXIN");
-    /**
-    //  获取商城名称
-    wx.request({
-      url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/config/get-value',
-      data: {
-        key: 'mallName'
-      },
-      success: function(res) {
-        if (res.data.code == 0) {
-          wx.setStorageSync('mallName', res.data.data.value);
-        }
-      }
-    })
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/score/send/rule',
-      data: {
-        code: 'goodReputation'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.globalData.order_reputation_score = res.data.data[0].score;
-        }
-      }
-    })
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/config/get-value',
-      data: {
-        key: 'recharge_amount_min'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.globalData.recharge_amount_min = res.data.data.value;
-        }
-      }
-    })
-    // 获取砍价设置
-    wx.request({
-      url: 'https://api.it120.cc/' + that.globalData.subDomain + '/shop/goods/kanjia/list',
-      data: {},
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.globalData.kanjiaList = res.data.data.result;
-        }
-      }
-    }) */
     this.login();
   },
   login : function () {
     var that = this;
     var token = that.globalData.token;
-    if (token) {
-      wx.request({
-        url: 'https://api.it120.cc/' + that.globalData.subDomain + '/user/check-token',
-        data: {
-          token: token
-        },
-        success: function (res) {
-          if (res.data.code != 0) {
-            that.globalData.token = null;
-            that.login();
-          }
-        }
-      })
-      return;
-    }
+
     wx.login({
       success: function (res) {
         console.log(res);
         wx.request({
-          url: 'https://api.it120.cc/'+ that.globalData.subDomain +'/user/wxapp/login',
+          url: 'http://127.0.0.1:8080/user/wxapp/login',
           data: {
             code: res.code
           },
           success: function(res) {
+            console.log(res);
             if (res.data.code == 10000) {
               // 去注册
               that.registerUser();
@@ -92,9 +34,9 @@ App({
               })
               return;
             }
-            //console.log(res.data.data)
-            that.globalData.token = res.data.data.token;
-            that.globalData.uid = res.data.data.uid;
+            console.log(res.data)
+            that.globalData.token = res.data.token;
+            that.globalData.uid = res.data.uid;
           }
         })
       }
@@ -111,7 +53,7 @@ App({
             var encryptedData = res.encryptedData;
             // 下面开始调用注册接口
             wx.request({
-              url: 'https://api.it120.cc/' + that.globalData.subDomain +'/user/wxapp/register/complex',
+              url: 'https://127.0.0.1:8080/user/wxapp/register/complex',
               data: {code:code,encryptedData:encryptedData,iv:iv}, // 设置请求的 参数
               success: (res) =>{
                 wx.hideLoading();
@@ -193,8 +135,8 @@ App({
   globalData:{
     userInfo:null,
     subDomain: "tz", // 如果你的域名是： https://api.it120.cc/abcd 那么这里只要填写 abcd
-    version: "2.0",
-    shareProfile: '百款精品商品，总有一款适合您' // 首页转发的时候话术
+    version: "1.0",
+    shareProfile: '总有一款适合您' // 首页转发的时候话术
   }
   /*
   根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒；
