@@ -75,6 +75,7 @@ Page({
       })
     })
     */
+    /*
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/banner/list',
       data: {
@@ -94,7 +95,10 @@ Page({
         }
       }
     })
+      */
+      /*
     wx.request({
+      
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/category/all',
       success: function(res) {
         var categories = [{id:0, name:"全部"}];
@@ -107,11 +111,12 @@ Page({
           categories:categories,
           activeCategoryId:0
         });
-        that.getGoodsList(0);
+        
       }
-    })
-    that.getCoupons ();
-    that.getNotice ();
+    })*/
+    that.getGoodsList(0);
+   // that.getCoupons ();
+   // that.getNotice ();
   },
   getGoodsList: function (categoryId) {
     if (categoryId == 0) {
@@ -146,6 +151,7 @@ Page({
       }
     })
   },
+  /*
   getCoupons: function () {
     var that = this;
     wx.request({
@@ -162,7 +168,7 @@ Page({
         }
       }
     })
-  },
+  },*/
   gitCoupon : function (e) {
     var that = this;
     wx.request({

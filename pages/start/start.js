@@ -8,9 +8,7 @@ Page({
     userInfo: {}
   },
   goToIndex:function(){
-    wx.switchTab({
-      url: '/pages/index/index',
-    });
+  
   },
   onLoad:function(){
     var that = this
@@ -21,6 +19,9 @@ Page({
       that.setData({
         userInfo: userInfo
       })
+      wx.switchTab({
+        url: '/pages/index/index',
+      });
     })
   },
   onShow:function(){
